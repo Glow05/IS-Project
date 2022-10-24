@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Glowapp</string>
+    <string name="glowapp">Glow App</string>
+    <string name="select_method">Select Method</string>
+    <string name="realtime">RealTime</string>
+    <string name="storage">Storage</string>
+    <string name="object_identification_system">Object Identification System</string>
+    <string name="glowapp_name">GlowApp</string>
+</resources>
