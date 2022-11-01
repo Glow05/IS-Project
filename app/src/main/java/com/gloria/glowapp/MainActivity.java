@@ -54,7 +54,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 101);
             }
         });
-
+        //The Predict Button
+        predict.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               //We are in the 13th minute
+               //First convert the model to a tflite model
+            }
+        });
         //Request for Camera
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
