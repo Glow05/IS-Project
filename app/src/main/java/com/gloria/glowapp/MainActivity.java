@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,12 +18,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gloria.glowapp.ml.Model;
+
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class MainActivity extends AppCompatActivity {
     private Button select, predict;
     private TextView tv;
     private Bitmap img;
+    int imageSize = 32;
 
 
 
@@ -81,15 +90,76 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+public void classifyImage(Bitmap capturedImage){
+    try {
+        Model model = Model.newInstance(getApplicationContext());
 
+        // Creates inputs for reference.
+        TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 32, 32, 3}, DataType.FLOAT32);
+        ByteBuffer byteBuffer =ByteBuffer.allocateDirect(4 * imageSize * 3);
+        byteBuffer.order(ByteOrder.nativeOrder());
+
+        int[] intValues = new int[imageSize * imageSize];
+        capturedImage.getPixels(intValues, 0, capturedImage.getWidth(), 0, 0, capturedImage.getWidth(), capturedImage.getHeight());
+
+        int pixel = 0;
+        //Iterate over each pixel and extract R, G and B values. Add those values individually to the byte buffer
+        for (int i = 0; i < imageSize; i++){
+            for (int j = 0; j < imageSize; j++){
+                int val = intValues[pixel++];//RGB
+                byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f / 1));
+                byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f / 1));
+                byteBuffer.putFloat((val & 0xFF) * (1.f / 1));
+
+            }
+        }
+
+
+        inputFeature0.loadBuffer(byteBuffer);
+
+        // Runs model inference and gets result.
+        Model.Outputs outputs = model.process(inputFeature0);
+        TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+        float[] confidences = outputFeature0.getFloatArray();
+        //Find the index of the class with the biggest confidence.
+        int maxPos = 0;
+        float maxConfidence = 0;
+        for (int i = 0; i < confidences.length; i++){
+            if (confidences[i] > maxConfidence){
+                maxConfidence = confidences[i];
+                maxPos = i;
+            }
+        }
+        //Displaying!!!!!!!!!!!!!
+        String[] classes = {"Cup", "Spoon", "Plate" };
+        predict.setText(classes[maxPos]);
+
+
+
+
+        // Releases model resources if no longer used.
+        model.close();
+    } catch (IOException e) {
+        // TODO Handle the exception
+    }
+
+}
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100) {
             //Get Capture Image
             Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+            //Rescaling the image to a square since the model identifies squared images
+            int dimension = Math.min(captureImage.getWidth(), captureImage.getHeight());
+            captureImage = ThumbnailUtils.extractThumbnail(captureImage, dimension,dimension);
             //Set Capture Image to ImageView
             imageView.setImageBitmap(captureImage);
+
+            //This converts the image captured from the camera to 32 by 32
+            captureImage = Bitmap.createScaledBitmap(captureImage, imageSize, imageSize, false);
+            classifyImage(captureImage);
 
             //Get the selected Image and set it to the ImageView
         }else if (requestCode == 101){
@@ -100,7 +170,10 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            //Glowie Convert the image from gallery to a size 32 by 32 this is in minute 9 of the #2nd video
+            // imageView.setImageBitmap(image);
+            //image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+            //classifyImage(image);
         }
 
             // Intent myIntent = new Intent(this,SecondActivity.class);
