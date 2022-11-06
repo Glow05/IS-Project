@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="110dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="15dp"
         android:text="@string/glowapp_name"
         android:textSize="30sp"
         tools:layout_editor_absoluteX="187dp"
@@ -31,7 +31,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="0dp"
         android:text="@string/object_identification_system"
         android:textAlignment="center"
@@ -40,59 +40,40 @@
         tools:layout_editor_absoluteY="154dp" />
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="238dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="13dp"
-        android:text="@string/select_method"
-        android:textSize="25sp"
-        tools:layout_editor_absoluteX="187dp"
-        tools:layout_editor_absoluteY="154dp" />
-
     <Button
         android:id="@+id/button_camera"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="219dp"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/button_camera"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="190dp"
+        android:layout_marginBottom="80dp"
         android:text="@string/realtime"
-        tools:layout_editor_absoluteX="196dp"
-        tools:layout_editor_absoluteY="232dp"
 
         />
 
     <Button
         android:id="@+id/button_gallery"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@id/button_camera"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="154dp"
-        android:layout_marginBottom="251dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="80dp"
         android:text="@string/gallery" />
 
     <Button
         android:id="@+id/button_predict"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@id/button_gallery"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginEnd="153dp"
-        android:layout_marginBottom="159dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="21dp"
         android:text="@string/predict" />
 
     <ImageView
@@ -105,9 +86,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="182dp"
+        android:layout_marginTop="132dp"
         android:layout_marginEnd="3dp"
-        android:layout_marginBottom="151dp" />
+        android:layout_marginBottom="200dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -116,7 +97,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="58dp" />
+        android:layout_marginEnd="67dp"
+        android:layout_marginBottom="396dp" />
 
 </RelativeLayout>

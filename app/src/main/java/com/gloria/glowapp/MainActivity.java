@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.gloria.glowapp.ml.Model;
 
 import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
@@ -65,10 +67,56 @@ public class MainActivity extends AppCompatActivity {
         });
         //The Predict Button
         predict.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                //We are in the 13th minute
                //First convert the model to a tflite model
+                img = Bitmap.createScaledBitmap(img, 32, 32, true);
+                try {
+                    Model model = Model.newInstance(getApplicationContext());
+
+                    // Creates inputs for reference.
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 32, 32, 3}, DataType.FLOAT32);
+
+                    TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
+                    tensorImage.load(img);
+                    ByteBuffer byteBuffer =tensorImage.getBuffer();
+
+
+                    inputFeature0.loadBuffer(byteBuffer);
+
+                    // Runs model inference and gets result.
+                    Model.Outputs outputs = model.process(inputFeature0);
+                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+                    // Releases model resources if no longer used.
+                    model.close();
+
+                     //..................
+                    // Runs model inference and gets result.
+
+                    float[] confidences = outputFeature0.getFloatArray();
+                    //Find the index of the class with the biggest confidence.
+                    int maxPos = 0;
+                    float maxConfidence = 0;
+                    for (int i = 0; i < confidences.length; i++){
+                        if (confidences[i] > maxConfidence){
+                            maxConfidence = confidences[i];
+                            maxPos = i;
+                        }
+                    }
+                    //Displaying!!!!!!!!!!!!!
+                    String[] classes = {"Cup", "Spoon", "Bottle" };
+                    predict.setText(classes[maxPos]);
+
+
+                   //tv.setText(outputFeature0.getFloatArray()[0] + "\n"+outputFeature0.getFloatArray()[1]);
+
+                } catch (IOException e) {
+                    // TODO Handle the exception
+                }
+
             }
         });
         //Request for Camera

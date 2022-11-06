@@ -2,7 +2,7 @@
     <string name="app_name">Glowapp</string>
     <string name="glowapp">Glow App</string>
     <string name="select_method">Choose</string>
-    <string name="realtime">Get Picture</string>
+    <string name="realtime">Camera</string>
     <string name="predict">Predict</string>
     <string name="object_identification_system">Object Identification System</string>
     <string name="glowapp_name">GlowApp</string>
