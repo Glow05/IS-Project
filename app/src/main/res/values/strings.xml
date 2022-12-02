@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Glowapp</string>
-    <string name="glowapp">Glow App</string>
+    <string name="glowapp">Have Fun while you learn :)</string>
     <string name="select_method">Choose</string>
     <string name="realtime">Camera</string>
     <string name="predict">Predict</string>

@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
+
                //We are in the 13th minute
                //First convert the model to a tflite model
                 img = Bitmap.createScaledBitmap(img, 32, 32, true);
@@ -107,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     //Displaying!!!!!!!!!!!!!
-                    String[] classes = {"Cup", "Spoon", "Bottle" };
+                    // this is the second attempt
+                    // Look at it Glowiee
+                    String[] classes = {"Bottle", "Spoon", "Cup" };
                     predict.setText(classes[maxPos]);
 
 
@@ -138,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-public void classifyImage(Bitmap capturedImage){
+   public void classifyImage(Bitmap capturedImage){
     try {
         Model model = Model.newInstance(getApplicationContext());
 
